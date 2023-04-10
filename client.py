@@ -58,7 +58,7 @@ def write():
             # Printing a list of commands
             print("### List of commands ###")
             print("/exit - Leave the chat")
-            print("/switch-<channel_name/user_name> - Switch to another channel / private chat")
+            print("/switch-<channel_name> - Switch to another channel")
             print("/current-channel - Show the current channel")
             print("/private-<target-user-nickname>-<message> - Send a private message to a user")
             
