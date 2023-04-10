@@ -33,13 +33,17 @@ def handle_client(client):
             
             elif clean_message.split(":")[0] == "(private)":
                 # Breaking the message into parts and sending it to the target client
-                sender_nickname = clean_message.split(":")[1].strip()
-                target_client_nickname = clean_message.split(":")[2].strip()
-                target_index = client_nicknames.index(target_client_nickname)
-                raw_message = clean_message.split(":")[3].strip()
-                message = f"(private):{sender_nickname}: {raw_message}"
+                if clean_message.split(":")[2].strip() in client_nicknames:
+                    sender_nickname = clean_message.split(":")[1].strip()
+                    target_client_nickname = clean_message.split(":")[2].strip()
+                    target_index = client_nicknames.index(target_client_nickname)
+                    raw_message = clean_message.split(":")[3].strip()
+                    message = f"(private):{sender_nickname}: {raw_message}"
 
-                clients[target_index].send(message.encode("ascii"))
+                    clients[target_index].send(message.encode("ascii"))
+                
+                else:
+                    print("User not found!")
                 
             else:
                 stream_messages(message)
