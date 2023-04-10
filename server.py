@@ -26,11 +26,20 @@ def handle_client(client):
             # Sending messages
             message = client.recv(1024)
             clean_message = message.decode("ascii")
-            clean_message = clean_message.split(":")[2].strip()
             
-            if clean_message == "/exit" and client in clients:
+            if clean_message.split(":")[2].strip() == "/exit" and client in clients:
                 # If "/exit" is typed, the client will be removed from the channel
                 leave_channel(client)
+            
+            elif clean_message.split(":")[0] == "(private)":
+                # Breaking the message into parts and sending it to the target client
+                sender_nickname = clean_message.split(":")[1].strip()
+                target_client_nickname = clean_message.split(":")[2].strip()
+                target_index = client_nicknames.index(target_client_nickname)
+                raw_message = clean_message.split(":")[3].strip()
+                message = f"(private):{sender_nickname}: {raw_message}"
+
+                clients[target_index].send(message.encode("ascii"))
                 
             else:
                 stream_messages(message)

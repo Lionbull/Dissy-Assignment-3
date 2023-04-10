@@ -31,10 +31,9 @@ def receive():
                 # Printing the message if matches the current channel
                 print(message)
                 
-            elif message.split(":")[0] == f"({nickname})":
+            elif message.split(":")[0] == f"(private)":
                 # Printing private messages
-                splitted_message = message.split(":")
-                print(f"(Private):{splitted_message[1]}: {splitted_message[2]}")
+                print(message)
                 
             elif message.split(":")[0] == f"(global)":
                 # Printing global messages (server messages)
@@ -61,6 +60,7 @@ def write():
             print("/exit - Leave the chat")
             print("/switch-<channel_name/user_name> - Switch to another channel / private chat")
             print("/current-channel - Show the current channel")
+            print("/private-<target-user-nickname>-<message> - Send a private message to a user")
             
         elif raw_message[0:7] == "/switch":
             # Switching to another channel
@@ -70,10 +70,16 @@ def write():
             # Changing the current channel
             current_channel = channel_name
             
+        elif raw_message[0:8] == "/private":
+            # Switching to private chat
+            raw_message = raw_message.split("-")
+            message = f"(private):{nickname}:{raw_message[1]}:{raw_message[2]}"
+            client.send(message.encode('ascii'))
+            
         elif raw_message == "/current-channel":
             # Showing the current channel
-            
             show_current_channel()
+            
         elif raw_message == "/exit":
             # Leaving the server
             print("### You left the server! ###")

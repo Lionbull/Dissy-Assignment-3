@@ -20,4 +20,5 @@ The main functionality is to send messages on different channels. Users might us
 /exit - Leave the chat <br>
 /switch-<channel_name/user_name> - Switch to another channel / private chat <br>
 /current-channel - Show the current channel <br>
+/private-<target-user-nickname>-<message> - Send a private message to a user <br>
 /help - Show list of commands
